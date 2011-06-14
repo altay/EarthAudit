@@ -1,0 +1,16 @@
+.DS_Store
+*~
+*.swp
+*.swo
+*.tmproj
+config/database.yml
+db/*.sqlite3
+log/*.log
+public/system/*
+test/reports/*
+tmp/*
+tmp/cache/*
+tmp/sessions/*
+tmp/sockets/*
+
+public/kmz_cache/*

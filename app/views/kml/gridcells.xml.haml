@@ -1,0 +1,26 @@
+!!! XML
+%kml{:xmlns => "http://www.opengis.net/kml/2.2"}
+  %Document
+    - if (@highlight)
+      %Style#gridCellHighlight
+        %LineStyle
+          %color ff0000ff
+          %width 2
+        %PolyStyle
+          %color 2f0000ff
+          %outline 1
+    - else
+      %Style#gridCell
+        %LineStyle
+          %color 2f000000
+          %width 0.5
+        %PolyStyle
+          %color 1fff0000
+          %outline 1
+    - @gridcells.compact.each do |gc|
+      %Placemark
+        -# hack -- kml <ExtendedData> tag doesn't seem to work in gmaps api
+        -# so we have to pass gridcell.id in through the <name> tag
+        %name #{gc.id} 
+        %styleUrl= (@highlight ? '#gridCellHighlight' : '#gridCell')
+        = gc.the_geom.as_kml(:altitude_mode => :relativeToGround, :extrude => 1,:altitude => 0)

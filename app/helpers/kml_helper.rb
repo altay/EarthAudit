@@ -1,0 +1,2 @@
+module KmlHelper
+end
