@@ -5,6 +5,7 @@ ActionController::Routing::Routes.draw do |map|
   #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'
   # Keep in mind you can assign values other than :controller and :action
   map.connect 'kml/gridcells.kmz', :controller => 'kml', :action => 'gridcells', :format => 'kmz'
+  #map.connect 'gridcells/data', :controller => 'kml', :action => 'gridcells', :format => 'json'
 
 
   # Sample of named route:
