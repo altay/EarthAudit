@@ -1,4 +1,5 @@
 class GridCell < ActiveRecord::Base
+  has_many :climate_reports
   SRID = 4269
 
   # find the grid cell that contains the given point.

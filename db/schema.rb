@@ -9,7 +9,28 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110602222129) do
+ActiveRecord::Schema.define(:version => 20110702100137) do
+
+  create_table "climate_reports", :force => true do |t|
+    t.integer  "grid_cell_id"
+    t.integer  "month"
+    t.integer  "year"
+    t.float    "precipitation"
+    t.float    "temperature"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "climate_reports", ["grid_cell_id"], :name => "index_climate_reports_on_grid_cell_id"
+  add_index "climate_reports", ["month", "year"], :name => "index_climate_reports_on_month_and_year"
+
+  create_table "crops", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "crops", ["name"], :name => "index_crops_on_name"
 
   create_table "grid_cells", :force => true do |t|
     t.integer  "fid"

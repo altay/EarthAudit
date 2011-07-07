@@ -34,7 +34,8 @@ var EA = new function() {
       var gcLayer = new google.maps.KmlLayer(gcKmzPath+jq.param(params), { clickable:false, map:EA.map, suppressInfoWindows:true, preserveViewport:true });
     });
 
-    var gcInfoWindow = new google.maps.InfoWindow();
+    var gcInfoWindow = new google.maps.InfoWindow({content:"<div id='chart_div'></div>", maxWidth: 10000});
+        //{content:"<iframe style='width:1000px;height:1000px;' src='http://google.com'></iframe>"});
     function highlightGridCell(gLatLng){
       var GRIDBOUNDS = new google.maps.LatLngBounds(
         new google.maps.LatLng(3.0000187, -18.16663),
@@ -49,11 +50,36 @@ var EA = new function() {
           {map:EA.map, suppressInfoWindows:true, preserveViewport:true}
         );
         jq.getJSON(url('/gridcells/data'), highlightParams, function(d){ 
-          gcInfoWindow.setContent("FID: " + d.grid_cell.fid);
+          //gcInfoWindow.setContent("FID: " + d.grid_cell.fid);
           gcInfoWindow.setPosition(gLatLng);
           gcInfoWindow.open(EA.map);
+          drawChart(d);
         });
       }
     }
+  }
+  function drawChart(climateData) {
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Month');
+    //data.addColumn('string', 'Year');
+    data.addColumn('number', 'Precipitation (mm/month)');
+    data.addColumn('number', 'Temperature (degrees C)');
+    //data.addRows(climateData.length);
+    data.addRows(climateData);
+        /*
+    jq.each(climateData, function(i,cd){
+      data.setValue(i, 0, cd['m']+'');
+     // data.setValue(i, 1, cd['y']+'');
+      data.setValue(i, 2, cd['p']);
+      //data.setValue(i, 1, cd['t']);
+    });
+      */
+    setTimeout(function(){  // without timeout, sometimes chart doesn't render cause infowindow doesn't exist yet
+      //var opts = { chartArea: { left: 200 } };
+      //var opts = {chxt: 'x'}
+      //var chart = new google.visualization.LineChart(document.getElementById('chart_div'), opts);
+      var chart = new google.visualization.ImageChart(document.getElementById('chart_div'));
+      chart.draw(data, {width: 500, height: 280, chxt:'x,y,r'});
+    }, 100);
   }
 }
