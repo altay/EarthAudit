@@ -7,8 +7,8 @@ class GridcellsController < ApplicationController
     render(:json=>{
       :gcid=>@gridcell.fid, 
       :climate=>{
-        :temperature=>@climate_reports.map{|c| c.to_json('temperature')},
-        :precipitation=>@climate_reports.map{|c| c.to_json('precipitation')}
+        :temperature=>@climate_reports.map{|c| c.to_json('temperature')}+[@climate_reports.first].map{|c| c.to_json('temperature',2011)},
+        :precipitation=>@climate_reports.map{|c| c.to_json('precipitation')}+[@climate_reports.first].map{|c| c.to_json('precipitation',2011)}
       },
       :plantings => @gridcell.plantings.by_crop(params[:crop] || @gridcell.crops.first).map{|p| p.to_json}
     }) and return
