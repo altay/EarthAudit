@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110702100137) do
+ActiveRecord::Schema.define(:version => 20110708231124) do
 
   create_table "climate_reports", :force => true do |t|
     t.integer  "grid_cell_id"
@@ -41,5 +41,19 @@ ActiveRecord::Schema.define(:version => 20110702100137) do
 
   add_index "grid_cells", ["fid"], :name => "index_grid_cells_on_fid"
   add_index "grid_cells", ["the_geom"], :name => "index_grid_cells_on_the_geom", :spatial => true
+
+  create_table "plantings", :force => true do |t|
+    t.integer  "grid_cell_id"
+    t.integer  "crop_id"
+    t.datetime "planting_start"
+    t.datetime "planting_end"
+    t.datetime "harvest_start"
+    t.datetime "harvest_end"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "plantings", ["crop_id"], :name => "index_plantings_on_crop_id"
+  add_index "plantings", ["grid_cell_id"], :name => "index_plantings_on_grid_cell_id"
 
 end
